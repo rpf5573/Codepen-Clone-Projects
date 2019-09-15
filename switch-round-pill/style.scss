@@ -1,0 +1,101 @@
+html {
+  box-sizing: border-box;
+}
+
+* {
+  box-sizing: inherit;
+  &:before,
+  &:after {
+    box-sizing: inherit;
+  }
+}
+
+body {
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  background: #fff;
+  font-family: 'Roboto', Arial;
+  color: #6C7486;
+  .switch {
+    &:not(:last-child) {
+      margin-bottom: 16px;
+    }
+  }
+}
+
+.switch {
+  --background: #E4ECFA;
+  --background-active: #275EFE;
+  --shadow: rgba(18, 22, 33, .04);
+  --shadow-dark: rgba(18, 22, 33, .32);
+  cursor: pointer;
+  display: flex;
+
+  input[type="checkbox"] {
+    display: none;
+    & + div {
+      width: 40px;
+      height: 24px;
+      border-radius: 12px;
+      overflow: hidden;
+      position: relative;
+      transition: transform .3s ease;
+      background: var(--background);
+
+      &:before, // before에는 뭐가 들었길래??
+      canvas {
+        left: 0;
+        top: 0;
+        display: block;
+        position: absolute;
+        transition: transform 0.5s ease, filter .5s ease; // filter가 뭐야?
+      }
+
+      &:before {
+        --x: -100%;
+        --s: 1;
+        content: '';
+        width: 24px;
+        height: 24px;
+        border-radius: 50%;
+        background: var(--background-active);
+        transform: translate(var(--x)) scale(var(--s));
+      }
+      canvas {
+        --x: -8px;
+        display: block;
+        filter: drop-shadow(0 1px 2px var(--shadow));
+        transform: translate(var(--x)); // transform을 왜하는거야?
+      }
+    }
+    &:checked {
+      & + div {
+        &:before {
+          --s: 3;
+          --x: 0;
+        }
+        canvas {
+          --x: 8px;
+          filter: drop-shadow(0 1px 2px var(--shadow-dark));
+        }
+      }
+    }
+  }
+  &:active {
+    input[type="checkbox"] {
+      & + div {
+        transform: scale(0.92);
+      }
+    }
+  }
+  span {
+    line-height: 24px;
+    font-size: 14px;
+    font-weight: 500;
+    display: block;
+    margin: 0 0 0 8px;
+  }
+}
